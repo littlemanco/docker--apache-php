@@ -19,10 +19,11 @@ RUN export TIDYWAYS_VERSION="v4.0.7" && \
     make && \
     make install && \
     # Install tini init
-    curl -o /sbin/tini  https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
-    curl -o /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
+    curl --location --output /sbin/tini  https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
+    curl --location --output /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
     gpg --verify /tmp/tini.asc /sbin/tini && \
+    chmod +x /sbin/tini && \
     # Clean up
     apt-get purge \
         --auto-remove \
@@ -35,7 +36,7 @@ RUN export TIDYWAYS_VERSION="v4.0.7" && \
     echo "tideways.auto_prepend_library=0" >> /etc/php/7.0/cli/conf.d/99-profiler.ini && \
     ## Add tideways to Apache
     echo "extension=tideways.so" >> /etc/php/7.0/apache2/conf.d/99-profiler.ini && \
-    echo "tideways.auto_prepend_library=0" >> /etc/php/apache2/cli/conf.d/99-profiler.ini && \
+    echo "tideways.auto_prepend_library=0" >> /etc/php/7.0/apache2/conf.d/99-profiler.ini && \
     # Make apache log to stderr/stdout
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/1 /var/log/apache2/error.log
