@@ -31,11 +31,12 @@ help: ## Show this menu
 	@grep -E '^[a-zA-Z_-%]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[32m%-30s\033[0m %s\n", $$1, $$2}'
 
 image: ## ${VERSION} | Create the docker image
+	if [[ -z "${VERSION}" ]]; then echo "Need to supply a version." && echo 1; fi
+	docker build -f ${VERSION}/Dockerfile -t quay.io/littlemanco/apache-php:${VERSION}-$(GIT_HASH) .
+	docker build -f ${VERSION}/Dockerfile -t quay.io/littlemanco/apache-php:${VERSION}-latest .
+push: ## ${VERSION} | Push the docker image to quay.io
 	if [[ -z "${VERSION}" ]]; then echo "Need to supply a version." && echo 1; fi;
-	cat ${VERSION}/Dockerfile | docker build -t quay.io/littlemanco/apache-php:${VERSION}-$(GIT_HASH) -
-
-push: ## Push the docker image to quay.io
-	docker push quay.io/littlemanco/apache-php:$(GIT_HASH)
-
+	docker push quay.io/littlemanco/apache-php:${VERSION}-$(GIT_HASH)
+	docker push quay.io/littlemanco/apache-php:${VERSION}-latest
 all: image push ## Create and push the docker image
 	echo "Done."
