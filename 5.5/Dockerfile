@@ -30,7 +30,10 @@ RUN export TINI_VERSION="v0.13.0" && \
         ${BUILD_PACKAGES} && \
     apt-get clean
 
-    # Configure PHP
+# Configure apache
+RUN a2enmod rewrite
+
+# Configure PHP
     ## Add tideways to the CLI
 RUN echo "extension=tideways.so" >> /etc/php/5.5/cli/conf.d/99-profiler.ini && \
     echo "tideways.auto_prepend_library=0" >> /etc/php/5.5/cli/conf.d/99-profiler.ini && \
