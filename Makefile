@@ -37,8 +37,9 @@ image: ## ${VERSION} | Create the docker image
 	    -f ${VERSION}/Dockerfile \
 	    -t quay.io/littlemanco/apache-php:${VERSION}-$(GIT_HASH) \
 	    .
+	# Enables the cache, as it will have been updated with latest build
 	docker build \
-	    --no-cache \
+	     \
 	    -f ${VERSION}/Dockerfile \
 	    -t quay.io/littlemanco/apache-php:${VERSION}-latest \
 	    .
