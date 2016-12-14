@@ -17,10 +17,11 @@ RUN export RUN_PACKAGES="apache2 libapache2-mod-php7.0 php7.0-apcu php7.0-curl p
         ${BUILD_PACKAGES} \
         ${RUN_PACKAGES}
     # Install tini init
+
 RUN export TINI_VERSION="v0.13.0" && \
     curl --location --output /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     curl --location --output /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 7.0E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
+    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
     gpg --verify /tmp/tini.asc /sbin/tini && \
     chmod +x /sbin/tini && \
     # Clean up
