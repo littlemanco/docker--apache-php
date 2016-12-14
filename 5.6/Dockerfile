@@ -20,7 +20,7 @@ RUN export RUN_PACKAGES="apache2 libapache2-mod-php5.6 php5.6-curl php5.6-opcach
 RUN export TINI_VERSION="v0.13.0" && \
     curl --location --output /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     curl --location --output /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 5.6E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
+    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
     gpg --verify /tmp/tini.asc /sbin/tini && \
     chmod +x /sbin/tini && \
     # Clean up
