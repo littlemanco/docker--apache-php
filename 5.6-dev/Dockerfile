@@ -1,8 +1,8 @@
 # Todo: Change this for a git hash
-FROM quay.io/littlemanco/apache-php:5.6-latest
+FROM quay.io/littlemanco/apache-php:5.6-rc1
 
-RUN sudo apt-get update && \
-    sudo apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
         php5.6-xdebug \
         strace \
         tcpdump \
