@@ -44,6 +44,14 @@ RUN echo "extension=tideways.so" >> /etc/php/5.6/cli/conf.d/99-profiler.ini && \
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 
+# These should be overridden by your runtime environment
+ENV SERVER_NAME www.example.com
+ENV SERVER_ADMIN webmaster@localhost
+ENV DOCUMENT_ROOT /var/www/html
+
+# Update the default vhost to one that listens for the environment variables.
+ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
+
 ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
