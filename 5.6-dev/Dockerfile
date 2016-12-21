@@ -1,5 +1,5 @@
 # Todo: Change this for a git hash
-FROM quay.io/littlemanco/apache-php:5.6-rc2
+FROM quay.io/littlemanco/apache-php:5.6-rc3
 
 RUN apt-get update && \
     apt-get install -y \

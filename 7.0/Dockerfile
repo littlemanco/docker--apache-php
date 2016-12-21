@@ -47,4 +47,12 @@ RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
+# These should be overridden by your runtime environment
+ENV SERVER_NAME www.example.com
+ENV SERVER_ADMIN webmaster@localhost
+ENV DOCUMENT_ROOT /var/www/html
+
+# Update the default vhost to one that listens for the environment variables.
+ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
+
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
