@@ -8,7 +8,7 @@ RUN apt-get update && \
         tcpdump \
         dnsutils
 
-ADD 5.6-dev/etc/php/5.6/apache2/conf.d/30-xdebug.ini /etc/php/5.6/apache2/conf.d/30-xdebug.ini
-ADD 5.6-dev/etc/php/5.6/apache2/conf.d/30-errors.ini /etc/php/5.6/apache2/conf.d/30-errors.ini
-ADD 5.6-dev/etc/php/5.6/cli/conf.d/30-xdebug.ini     /etc/php/5.6/cli/conf.d/30-xdebug.ini
-ADD 5.6-dev/etc/php/5.6/cli/conf.d/30-errors.ini     /etc/php/5.6/cli/conf.d/30-errors.ini
+ADD etc/php/5.6/apache2/conf.d/30-xdebug.ini /etc/php/5.6/apache2/conf.d/30-xdebug.ini
+ADD etc/php/5.6/apache2/conf.d/30-errors.ini /etc/php/5.6/apache2/conf.d/30-errors.ini
+ADD etc/php/5.6/cli/conf.d/30-xdebug.ini     /etc/php/5.6/cli/conf.d/30-xdebug.ini
+ADD etc/php/5.6/cli/conf.d/30-errors.ini     /etc/php/5.6/cli/conf.d/30-errors.ini
