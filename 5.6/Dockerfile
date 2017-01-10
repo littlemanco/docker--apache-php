@@ -43,10 +43,10 @@ RUN echo "extension=tideways.so" >> /etc/php/5.6/cli/conf.d/99-profiler.ini && \
     #
     # Symlink the apache logs so they're piped to stdout
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
-    ln -sf /proc/self/fd/1 /var/log/apache2/error.log &&
+    ln -sf /proc/self/fd/1 /var/log/apache2/error.log && \
     #
     # In Xenial, PHP7 is the default runtime. Thus, we're changing it expressly to php5.6
-    && update-alternatives --install /usr/bin/php php /usr/bin/php5.6
+    update-alternatives --install /usr/bin/php php /usr/bin/php5.6
 
 # These should be overridden by your runtime environment
 ENV SERVER_NAME www.example.com
