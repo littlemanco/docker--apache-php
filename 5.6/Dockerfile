@@ -72,5 +72,3 @@ ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
-
-USER "www-data"
