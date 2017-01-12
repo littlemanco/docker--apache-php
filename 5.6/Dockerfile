@@ -44,12 +44,10 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     #
     # Configure PHP
     #
-    # -- Add tideways to the CLI
-    echo "extension=tideways.so" >> /etc/php/5.6/cli/conf.d/99-profiler.ini && \
+    # -- Configure tideways on the CLI
     echo "tideways.auto_prepend_library=0" >> /etc/php/5.6/cli/conf.d/99-profiler.ini && \
     #
-    # -- Add tideways to Apache
-    echo "extension=tideways.so" >> /etc/php/5.6/apache2/conf.d/99-profiler.ini && \
+    # -- Configure tideways on Apache
     echo "tideways.auto_prepend_library=0" >> /etc/php/5.6/apache2/conf.d/99-profiler.ini && \
     #
     # -- In Xenial, PHP7 is the default runtime. Change it to php5.6
