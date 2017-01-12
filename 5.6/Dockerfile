@@ -46,8 +46,8 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     #
     for FILE in "/etc/php/5.6/cli/ /etc/php/5.6/apache/"; do \
         # -- Tideways
-        echo "tideways.auto_prepend_library=0" >> "${FILE}/conf.d/99-profiler.ini" \
-    done; && \
+        echo "tideways.auto_prepend_library=0" >> "${FILE}/conf.d/99-profiler.ini"; \
+    done; \
     # -- In Xenial, PHP7 is the default runtime. Change it to php5.6
     update-alternatives --install /usr/bin/php php /usr/bin/php5.6 100 && \
     #
