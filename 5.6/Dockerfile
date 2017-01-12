@@ -1,4 +1,4 @@
-FROM ubuntu:xenial-20161121
+FROM ubuntu:xenial-20161213
 
 RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl" && \
     export LC_ALL=en_US.UTF-8 && \
