@@ -9,6 +9,7 @@ RUN apt-get update && \
         php5.6-xdebug \
         strace \
         tcpdump \
+        curl \
         dnsutils && \
     #
     # Mailhog

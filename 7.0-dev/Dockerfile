@@ -7,6 +7,7 @@ RUN apt-get update && \
     # Install development packages
     apt-get install -y \
         php7.0-xdebug \
+        curl \
         strace \
         tcpdump \
         dnsutils && \
