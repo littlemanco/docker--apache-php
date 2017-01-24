@@ -44,7 +44,7 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     #
     # Configure PHP
     #
-    for FILE in "/etc/php/7.0/cli/ /etc/php/7.0/apache/"; do \
+    for FILE in "/etc/php/7.0/cli/" "/etc/php/7.0/apache2/"; do \
         # -- Tideways
         echo "tideways.auto_prepend_library=0" >> "${FILE}/conf.d/99-profiler.ini" && \
         # -- Opcache
