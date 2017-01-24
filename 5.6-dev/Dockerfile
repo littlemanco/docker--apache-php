@@ -24,7 +24,7 @@ RUN apt-get update && \
         # -- Opcache
         sed --in-plcae 's:;sendmail_path =:sendmail_path = /usr/local/bin/mhsendmail --smtp-addr="${SMTP_ADDR}:"' && \
         sed --in-place 's/opcache.validate_timestamps=0/;opcache.validate_timestamps=1/' "${FILE}/php.ini" &&  \
-        sed --in-place 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/' "${FILE}/php.ini" && \
+        sed --in-place 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/' "${FILE}/php.ini"; \
     done;
 
 ADD etc/php/5.6/apache2/conf.d/30-xdebug.ini /etc/php/5.6/apache2/conf.d/30-xdebug.ini
