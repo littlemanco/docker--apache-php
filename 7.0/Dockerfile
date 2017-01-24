@@ -50,7 +50,7 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
         # -- Opcache
         sed --in-place 's/;opcache.enable=0/opcache.enable=1/' "${FILE}/php.ini" && \
         sed --in-place 's/;opcache.enable_cli=0/opcache.enable_cli=1/' "${FILE}/php.ini" && \
-        sed --in-place 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0' "${FILE}/php.ini"; \
+        sed --in-place 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0/' "${FILE}/php.ini"; \
     done; \
     #
     # Logs
