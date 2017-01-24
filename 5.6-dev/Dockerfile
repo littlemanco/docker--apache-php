@@ -23,7 +23,7 @@ RUN apt-get update && \
     # -- Customize PHP configuration
     for FILE in "/etc/php/5.6/cli/" "/etc/php/5.6/apache/"; do \
         # -- Opcache
-        sed --in-place 's:;sendmail_path =:sendmail_path = /usr/local/bin/mhsendmail --smtp-addr="${SMTP_ADDR}:"' "${FILE}/php.ini" && \
+        sed --in-place 's:;sendmail_path =:sendmail_path = /usr/local/bin/mhsendmail --smtp-addr="${SMTP_ADDR}":' "${FILE}/php.ini" && \
         sed --in-place 's/opcache.validate_timestamps=0/;opcache.validate_timestamps=1/' "${FILE}/php.ini" &&  \
         sed --in-place 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/' "${FILE}/php.ini"; \
     done;
