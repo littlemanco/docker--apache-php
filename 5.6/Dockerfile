@@ -44,13 +44,13 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     #
     # Configure PHP
     #
-    for FILE in "/etc/php/5.6/cli/ /etc/php/5.6/apache/"; do \
+    for FILE in "/etc/php/5.6/cli/" "/etc/php/5.6/apache/"; do \
         # -- Tideways
         echo "tideways.auto_prepend_library=0" >> "${FILE}/conf.d/99-profiler.ini" && \
         # -- Opcache
         sed --in-place 's/;opcache.enable=0/opcache.enable=1/' "${FILE}/php.ini" && \
         sed --in-place 's/;opcache.enable_cli=0/opcache.enable_cli=1/' "${FILE}/php.ini" && \
-        sed --in-place 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0' "${FILE}/php.ini"; \
+        sed --in-place 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0/' "${FILE}/php.ini"; \
     done; \
     # -- In Xenial, PHP7 is the default runtime. Change it to php5.6
     update-alternatives --install /usr/bin/php php /usr/bin/php5.6 100 && \
