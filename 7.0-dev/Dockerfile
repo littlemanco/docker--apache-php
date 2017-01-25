@@ -15,7 +15,9 @@ RUN apt-get update && \
     # Mailhog
     #
     # -- Install
-    curl -O "https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64" && \
+    curl --remote-name \
+         --location \
+        "https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64" && \
     mv "mhsendmail_linux_amd64" "/usr/local/bin/mhsendmail" && \
     #
     # Configure PHP
@@ -23,7 +25,7 @@ RUN apt-get update && \
     # -- Customize PHP configuration
     for FILE in "/etc/php/7.0/cli/" "/etc/php/7.0/apache2/"; do \
         # -- Opcache
-        sed --in-place 's:;sendmail_path =:sendmail_path = /usr/local/bin/mhsendmail --smtp-addr="${SMTP_ADDR}":' "${FILE}/php.ini" && \
+        sed --in-place 's:;sendmail_path =:sendmail_path = "/usr/local/bin/mhsendmail --smtp-addr=${SMTP_ADDR}":' "${FILE}/php.ini" && \
         sed --in-place 's/opcache.validate_timestamps=0/;opcache.validate_timestamps=1/' "${FILE}/php.ini" &&  \
         sed --in-place 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/' "${FILE}/php.ini"; \
     done;
