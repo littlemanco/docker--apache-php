@@ -17,6 +17,7 @@ RUN apt-get update && \
     # -- Install
     curl --remote-name \
          --location \
+         "https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64" && \
     mv "mhsendmail_linux_amd64" "/usr/local/bin/mhsendmail" && \
     #
     # Configure PHP
