@@ -2,6 +2,8 @@
 Apache 2 + PHP
 ==============
 
+[![Build Status](https://quay.io/repository/littlemanco/apache-php/status "Build Status")](https://quay.io/repository/littlemanco/apache-php/)
+
 Justification
 -------------
 
