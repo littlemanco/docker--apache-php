@@ -10,7 +10,8 @@ RUN apt-get update && \
         strace \
         tcpdump \
         curl \
-        dnsutils && \
+        dnsutils \
+        vim && \
     #
     # Mailhog
     #
