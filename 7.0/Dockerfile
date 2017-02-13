@@ -24,7 +24,7 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     #
     # Install tini init
     #
-    export TINI_VERSION="v0.13.0" && \
+    export TINI_VERSION="v0.14.0" && \
     curl --location --output /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     curl --location --output /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
