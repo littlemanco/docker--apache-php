@@ -14,6 +14,19 @@ going back to the simple Apache2 + mod_php model. The reasons are as follows:
   have quite a number of very nice properties when dealing with only a single process.
 - Apache's PHP performance seems comporable to NGINX + PHP (note: Just PHP; Nginx owns static resources)
 
+Versioning Strategy
+-------------------
+
+If you browse the quay.io repo, you'll notice I drifted through various different versioning strategies. I recently
+decided I like the Debian habit of keeping the initial version of the application, combined with a build number.
+
+Using these
+-----------
+
+Go nuts. However, I make no guarantees of their safety / security / usefulness. If you find issues, I'd love it if you
+report them, but I can guarantee no timely fixes. Hopefully this stack will get picked up by someone willing to fork
+out cash to support it, and I can chip away at improving it.
+
 Containers
 ----------
 
@@ -37,5 +50,3 @@ I'm not yet sure whether this is a good idea. Unanswered questions are:
 - How do we tell which problems are PHPs and which are apaches?
 - What are the constraints on using Apache?
 - What happens to Apache in when PHP does something insane?
-
-
