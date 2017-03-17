@@ -1,5 +1,8 @@
 FROM ubuntu:xenial-20161213
 
+# VERSION is unused, it's just here to indicate which PHP version this build is expected to compile.
+ENV VERSION=5.6.30-7
+
 RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl" && \
     export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
@@ -41,6 +44,10 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     #
     # -- Enable mod rewrite
     a2enmod rewrite && \
+    # -- Enable SSL
+    a2enmod ssl && \
+    # -- Enable mod_status
+    a2enmod status && \
     #
     # Configure PHP
     #
