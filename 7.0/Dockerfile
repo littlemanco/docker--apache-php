@@ -1,14 +1,17 @@
-FROM ubuntu:zesty-20170411
+FROM debian:stretch-slim11
 
-# VERSION is unused, it's just here to indicate which PHP version this build is expected to compile.
-ENV VERSION=7.0.17-9
-
-RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl" && \
+RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
+    export BUILD_PACKAGES="apt-transport-https lsb-release ca-certificates software-properties-common curl" && \
     export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
     apt-get update && \
-    apt-get install -y ${BUILD_PACKAGES} && \
-    add-apt-repository ppa:ondrej/php && \
+    apt-get install --yes ${BUILD_PACKAGES} ${CONTAINER_BUILD_PACKAGES} && \
+    #
+    # Add the PHP Repo from Ondrej
+    # Instructions for adding this repo come from https://packages.sury.org/php/README.txt
+    #
+    wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
+    echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list && \
     apt-get update && \
     #
     # Add tidyways to the sources list
@@ -22,7 +25,6 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     export RUN_PACKAGES="apache2 libapache2-mod-php7.0 php7.0-curl php7.0-opcache php7.0-apcu php7.0-gd php7.0-intl php7.0-mbstring php7.0-mcrypt php7.0-pdo php7.0-mysql php7.0-simplexml php7.0-soap php7.0-xml php7.0-xsl php7.0-zip php7.0-json php7.0-iconv php7.0-opcache php7.0-dev tideways-php" && \
     apt-get update && \
     apt-get install --yes \
-        ${BUILD_PACKAGES} \
         ${RUN_PACKAGES} &&\
     #
     # Install tini init
@@ -66,7 +68,11 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     #
     # -- Symlink the apache logs so they're piped to stdout
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
-    ln -sf /proc/self/fd/1 /var/log/apache2/error.log
+    ln -sf /proc/self/fd/1 /var/log/apache2/error.log && \
+    #
+    # Build cleanup
+    #
+    apt-get purge --yes ${CONTAINER_BUILD_PACKAGES}
 
 # These should be overridden by your runtime environment
 ENV SERVER_NAME www.example.com
