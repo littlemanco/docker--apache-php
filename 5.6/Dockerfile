@@ -5,7 +5,7 @@ RUN export BUILD_PACKAGES="software-properties-common curl" && \
     export LANG=en_US.UTF-8 && \
     apt-get update && \
     apt-get install -y ${BUILD_PACKAGES} && \
-    add-apt-repository ppa:ondrej/php && \
+    add-apt-repository packages.sury.org/php && \
     apt-get update && \
     #
     # Add tidyways to the sources list
