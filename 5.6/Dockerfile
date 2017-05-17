@@ -74,7 +74,7 @@ RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
     #
     # Build cleanup
     #
-    apt-get purge ${CONTAINER_BUILD_PACKAGES}
+    apt-get purge --yes ${CONTAINER_BUILD_PACKAGES}
 # These should be overridden by your runtime environment
 ENV SERVER_NAME www.example.com
 ENV SERVER_ADMIN webmaster@localhost
