@@ -48,6 +48,8 @@ RUN export BUILD_PACKAGES="software-properties-common language-pack-en-base curl
     a2enmod ssl && \
     # -- Enable mod status
     a2enmod status && \
+    # -- Enable HTTP/2
+    a2enmod http2 && \
     #
     # Configure PHP
     #
