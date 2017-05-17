@@ -1,11 +1,17 @@
 FROM debian:stretch-slim
 
-RUN export BUILD_PACKAGES="software-properties-common curl" && \
+RUN export CONTAINER_BUILD_PACKAGES="wget" && \
+    export BUILD_PACKAGES="apt-transport-https lsb-release ca-certificates software-properties-common curl" && \
     export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
     apt-get update && \
-    apt-get install -y ${BUILD_PACKAGES} && \
-    add-apt-repository packages.sury.org/php && \
+    apt-get install --yes ${BUILD_PACKAGES} ${CONTAINER_BUILD_PACKAGES} && \
+    #
+    # Add the PHP Repo from Ondrej
+    # Instructions for adding this repo come from https://packages.sury.org/php/README.txt
+    #
+    wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
+    echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list && \
     apt-get update && \
     #
     # Add tidyways to the sources list
@@ -19,7 +25,6 @@ RUN export BUILD_PACKAGES="software-properties-common curl" && \
     export RUN_PACKAGES="apache2 libapache2-mod-php5.6 php5.6-curl php5.6-opcache php5.6-apcu php5.6-gd php5.6-intl php5.6-mbstring php5.6-mcrypt php5.6-pdo php5.6-mysql php5.6-simplexml php5.6-soap php5.6-xml php5.6-xsl php5.6-zip php5.6-json php5.6-iconv php5.6-opcache php5.6-dev tideways-php" && \
     apt-get update && \
     apt-get install --yes \
-        ${BUILD_PACKAGES} \
         ${RUN_PACKAGES} &&\
     #
     # Install tini init
@@ -65,8 +70,11 @@ RUN export BUILD_PACKAGES="software-properties-common curl" && \
     #
     # -- Symlink the apache logs so they're piped to stdout
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
-    ln -sf /proc/self/fd/1 /var/log/apache2/error.log
-
+    ln -sf /proc/self/fd/1 /var/log/apache2/error.log && \
+    #
+    # Build cleanup
+    #
+    apt-get purge ${CONTAINER_BUILD_PACKAGES}
 # These should be overridden by your runtime environment
 ENV SERVER_NAME www.example.com
 ENV SERVER_ADMIN webmaster@localhost
