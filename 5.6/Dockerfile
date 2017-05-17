@@ -55,7 +55,7 @@ RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
     #
     # Configure PHP
     #
-    for FILE in "/etc/php/5.6/cli/" "/etc/php/5.6/apache/"; do \
+    for FILE in "/etc/php/5.6/cli/" "/etc/php/5.6/apache2/"; do \
         # -- Tideways
         echo "tideways.auto_prepend_library=0" >> "${FILE}/conf.d/99-profiler.ini" && \
         # -- Opcache
