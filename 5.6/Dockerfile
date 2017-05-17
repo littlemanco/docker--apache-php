@@ -1,4 +1,4 @@
-FROM ubuntu:xenial-20161213
+FROM ubuntu:zesty-20170411
 
 # VERSION is unused, it's just here to indicate which PHP version this build is expected to compile.
 ENV VERSION=5.6.30-7
