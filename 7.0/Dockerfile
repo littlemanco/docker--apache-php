@@ -1,4 +1,4 @@
-FROM debian:stretch-slim11
+FROM debian:stretch-slim
 
 RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
     export BUILD_PACKAGES="apt-transport-https lsb-release ca-certificates software-properties-common curl" && \
