@@ -8,7 +8,7 @@ RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
     # Do base filesystem upgrades to update anything between when the original FS was released and build time
     #
     apt-get update && \
-    apt-get dist-upgrade && \
+    apt-get dist-upgrade --yes && \
     #
     # Install required packages
     #
