@@ -4,7 +4,14 @@ RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
     export BUILD_PACKAGES="apt-transport-https lsb-release ca-certificates software-properties-common curl" && \
     export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
+    #
+    # Do base filesystem upgrades to update anything between when the original FS was released and build time
+    #
     apt-get update && \
+    apt-get dist-upgrade && \
+    #
+    # Install required packages
+    #
     apt-get install --yes ${BUILD_PACKAGES} ${CONTAINER_BUILD_PACKAGES} && \
     #
     # Add the PHP Repo from Ondrej

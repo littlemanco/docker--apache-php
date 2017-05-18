@@ -17,8 +17,25 @@ going back to the simple Apache2 + mod_php model. The reasons are as follows:
 Versioning Strategy
 -------------------
 
-If you browse the quay.io repo, you'll notice I drifted through various different versioning strategies. I recently
-decided I like the Debian habit of keeping the initial version of the application, combined with a build number.
+If you browse the quay.io repo, you'll notice I drifted through various different versioning strategies. At the moment,
+I like:
+
+```
+${UPSTREAM_VERSION}-${PACKAGE_BUILD_NUMER}+${CONTAINER_BUILD_NUMBER}
+```
+
+For example, where the version of PHP is 5.6.30, it is the 10th build and I have made two additional container changes
+it will be
+
+```
+5.6.30-10+2
+```
+
+Docker doesn't understand the "+" character in a tag. Thus, that gets rendered to a "_" character. So the image becomes
+
+```
+quay.io/littlemanco/apache-php:5.6.30-10_2
+```
 
 Using these
 -----------
