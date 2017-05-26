@@ -1,8 +1,8 @@
 FROM debian:stretch-slim
 
 RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
-    export BUILD_PACKAGES="lsb-release ca-certificates software-properties-common curl" && \
-    export RUN_PACKAGES="apt-transport-https" && \
+    export BUILD_PACKAGES="lsb-release software-properties-common" && \
+    export RUN_PACKAGES="apt-transport-https ca-certificates curl" && \
     export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
     #
