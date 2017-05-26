@@ -5,7 +5,8 @@ ENV SMTP_ADDR="localhost:1025"
 
 RUN apt-get update && \
     # Install development packages
-    apt-get install -y \
+    apt-get install --yes \
+        apt-transport-https \
         php5.6-xdebug \
         strace \
         tcpdump \
