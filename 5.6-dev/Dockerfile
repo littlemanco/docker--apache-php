@@ -1,4 +1,4 @@
-FROM quay.io/littlemanco/apache-php:5.6-rc5
+FROM quay.io/littlemanco/apache-php:5.6.30-11_1
 
 # This presumes that the user will start mailhog in the container
 ENV SMTP_ADDR="localhost:1025"
