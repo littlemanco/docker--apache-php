@@ -1,7 +1,8 @@
 FROM debian:stretch-slim
 
-RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
-    export BUILD_PACKAGES="apt-transport-https lsb-release ca-certificates software-properties-common curl" && \
+RUN export CONTAINER_BUILD_PACKAGES="wget gpg" &&
+    export BUILD_PACKAGES="lsb-release software-properties-common" && \
+    export RUN_PACKAGES="apt-transport-https ca-certificates curl" && \
     export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
     #
@@ -13,7 +14,7 @@ RUN export CONTAINER_BUILD_PACKAGES="wget gpg" && \
     # Install required packages
     #
     apt-get update && \
-    apt-get install --yes ${BUILD_PACKAGES} ${CONTAINER_BUILD_PACKAGES} && \
+    apt-get install --yes ${BUILD_PACKAGES} ${RUN_PACKAGES} ${CONTAINER_BUILD_PACKAGES} && \
     #
     # Add the PHP Repo from Ondrej
     # Instructions for adding this repo come from https://packages.sury.org/php/README.txt
