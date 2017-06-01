@@ -88,7 +88,13 @@ ENV SERVER_ADMIN webmaster@localhost
 ENV DOCUMENT_ROOT /var/www/html
 
 # Update the default vhost to one that listens for the environment variables.
-ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
+ADD etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+# Add GZIP
+ADD etc/apache2/conf-available/gzip.conf /etc/apache2/conf-available/gzip.conf
+
+RUN ln --symbolic --force --no-dereference /etc/apache2/sites-available/000-default.conf  /etc/apache2/sites-enabled/000-default.conf && \
+    ln --symbolic --force --no-dereference /etc/apache2/conf-available/gzip.conf          /etc/apache2/conf-enabled/gzip.conf
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
