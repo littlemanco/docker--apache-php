@@ -4,8 +4,10 @@
 # An example is below:
 #
 #  ENV PHP_VERSION "5.6"
-#  ENV TINI_VERSION "16.1"
+#  ENV TINI_VERSION "16.1" # Optional
 #
+
+TINI_VERSION=${TINI_VERSION:-v0.17.0}
 
 # Exit codes from sysexists.h
 __EXIT_CODE_USAGE=64
@@ -21,7 +23,7 @@ __exit() {
 
 __check_env() {
   # Checks that the expected environment variables are defined  
-  if [[ -z "PHP_VERSION" ]] || [[ -z "TINI_VERSION" ]]; then
+  if [[ -z "$PHP_VERSION" ]] || [[ -z "$TINI_VERSION" ]]; then
       __exit "Expected environment variables PHP_VERSION and TINI_VERSION. Not found" $__EXIT_CODE_USAGE
   fi
 }
@@ -64,7 +66,6 @@ __provision() {
     #
     # Install tini init
     #
-    export TINI_VERSION="v0.14.0" && \
     curl --location --output /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     curl --location --output /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E8${PHP_VERSION}B1B4779EA4DAAEC70B588DFF0527A9B7 && \
