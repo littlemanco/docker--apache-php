@@ -68,7 +68,7 @@ __provision() {
     #
     curl --location --output /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     curl --location --output /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E8${PHP_VERSION}B1B4779EA4DAAEC70B588DFF0527A9B7 && \
+    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
     gpg --verify /tmp/tini.asc /sbin/tini && \
     chmod +x /sbin/tini && \
     # Clean up
@@ -97,7 +97,9 @@ __provision() {
         # -- Opcache
         sed --in-place 's/;opcache.enable=0/opcache.enable=1/' "${FILE}/php.ini" && \
         sed --in-place 's/;opcache.enable_cli=0/opcache.enable_cli=1/' "${FILE}/php.ini" && \
-        sed --in-place 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0/' "${FILE}/php.ini"; \
+        sed --in-place 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0/' "${FILE}/php.ini" && \
+        # -- Memory
+        sed --in-place 's/128M/512M/' "${FILE}/php.ini"; \
     done; \
     # -- In Xenial, PHP7 is the default runtime. Change it to php${PHP_VERSION}
     update-alternatives --install /usr/bin/php php /usr/bin/php${PHP_VERSION} 100 && \
