@@ -37,3 +37,6 @@ container: ## The container to build, where ${VERSION} is the version to build.
 	docker build --build-arg="PHP_VERSION="$${VERSION} \
 	    --tag="quay.io/littlemanco/apache-php:$${VERSION}-latest" \
 	    .
+
+push-container: container ## Builds and pushes the container
+	docker push quay.io/littlemanco/apache-php:$${VERSION}-latest
