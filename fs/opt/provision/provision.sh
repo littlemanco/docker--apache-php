@@ -67,12 +67,6 @@ __provision() {
     # Install tini init
     #
     curl --location --output /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
-    curl --location --output /tmp/tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
-    export TINI_GPG_KEY="595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7" && \
-    ( gpg --keyserver Zpool.sks-keyservers.net --recv-keys "$TINI_GPG_KEY" \
-    || gpg --keyserver pgp.mit.edu --recv-keys "$TINI_GPG_KEY" \
-    || gpg --keyserver keyserver.pgp.com --recv-keys "$TINI_GPG_KEY" ); \
-    gpg --verify /tmp/tini.asc /sbin/tini && \
     chmod +x /sbin/tini && \
     # Clean up
     apt-get purge \
