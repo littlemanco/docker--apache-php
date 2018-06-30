@@ -3,6 +3,15 @@ FROM debian:stretch-slim
 ARG TINI_VERSION="v0.17.0"
 ARG PHP_VERSION
 
+##
+## Set the path to the TLS certificate to use. Uses the "snake-oil" certificate by default.
+##
+## See
+##   - https://askubuntu.com/questions/396120/what-is-the-purpose-of-the-ssl-cert-snakeoil-key
+##
+ENV SERVER_TLS_CERTIFICATE_PATH="/etc/ssl/certs/ssl-cert-snakeoil.pem"
+ENV SERVER_TLS_CERTIFICATE_KEY_PATH="/etc/ssl/private/ssl-cert-snakeoil.key"
+
 COPY fs/opt/provision/provision.sh /opt/provision/provision.sh
 
 RUN /opt/provision/provision.sh
@@ -14,7 +23,7 @@ ENV DOCUMENT_ROOT /var/www/html
 
 # Update the default vhost to one that listens for the environment variables.
 ADD fs/etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf
-ADD fs/etc/apache2/conf-enabled/gzip.conf       /etc/apache2/conf-enabled/gzip.conf
+ADD fs/etc/apache2/conf-enabled/*                 /etc/apache2/conf-enabled/
 
 ENTRYPOINT ["/sbin/tini", "--"]
 

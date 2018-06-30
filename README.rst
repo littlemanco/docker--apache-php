@@ -44,20 +44,20 @@ Go nuts. However, I make no guarantees of their safety / security / usefulness. 
 report them, but I can guarantee no timely fixes. Hopefully this stack will get picked up by someone willing to fork
 out cash to support it, and I can chip away at improving it.
 
+TLS / SSL
+"""""""""
+
+Please **DO NOT** use the self signed certificate that is packaged in the container for anything other than testing. It
+is fundamentally unsound; the security of a secrecy is based on the existance of a **private** key. Because this 
+container is public, the key is not private and intermediary can trivially man in the middle connections.
+
+The HTTPS implementation is designed to make the implementation of SSL connections mediated by new, actually private
+certificates easier.
+
 Containers
 ----------
 
 The containers come in two versions:
-
-Production
-""""""""""
-
-Containers that are built for production.
-
-Development
-"""""""""""
-
-Containers built on top of the production containers, but with additional development tools (such as XDEBUG) enabled.
 
 Thinking
 --------

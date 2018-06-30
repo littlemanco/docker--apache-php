@@ -85,6 +85,8 @@ __provision() {
     a2enmod status && \
     # -- Enable HTTP/2
     a2enmod http2 && \
+    # -- Enable mod_header
+    a2enmod headers && \
     #
     # Configure PHP
     #

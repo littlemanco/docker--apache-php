@@ -34,7 +34,9 @@ help: ## Show this menu
 	@grep -E '^[a-zA-Z_-%]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[32m%-30s\033[0m %s\n", $$1, $$2}'
 
 container: ## The container to build, where ${VERSION} is the version to build.
-	docker build --build-arg="PHP_VERSION="$${VERSION} \
+	docker build \
+	    --no-cache \
+	    --build-arg="PHP_VERSION="$${VERSION} \
 	    --tag="quay.io/littlemanco/apache-php:$${VERSION}-latest" \
 	    .
 
