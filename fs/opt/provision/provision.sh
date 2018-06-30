@@ -32,8 +32,8 @@ __provision() {
     export CONTAINER_BUILD_PACKAGES="wget gpg" && \
     export BUILD_PACKAGES="lsb-release software-properties-common" && \
     export RUN_PACKAGES="apt-transport-https ca-certificates curl" && \
-    export LC_ALL=en_US.UTF-8 && \
-    export LANG=en_US.UTF-8 && \
+    export LC_ALL=C.UTF-8 && \
+    export LANG=C.UTF-8 && \
     #
     # Do base filesystem upgrades to update anything between when the original FS was released and build time
     #
@@ -87,6 +87,10 @@ __provision() {
     a2enmod http2 && \
     # -- Enable mod_header
     a2enmod headers && \
+    # -- Enable request ID
+    a2enmod unique_id && \
+    # -- Remove the custom log format for undefined virtual hosts
+    rm /etc/apache2/conf-enabled/other-vhosts-access-log.conf && \
     #
     # Configure PHP
     #

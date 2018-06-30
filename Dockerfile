@@ -12,6 +12,12 @@ ARG PHP_VERSION
 ENV SERVER_TLS_CERTIFICATE_PATH="/etc/ssl/certs/ssl-cert-snakeoil.pem"
 ENV SERVER_TLS_CERTIFICATE_KEY_PATH="/etc/ssl/private/ssl-cert-snakeoil.key"
 
+##
+## Set some diagnostic information such that logs accurately reflect where this is coming from
+##
+ENV SERVER_ENVIRONMENT="production"
+ENV SERVER_SERVICE="apache2"
+
 COPY fs/opt/provision/provision.sh /opt/provision/provision.sh
 
 RUN /opt/provision/provision.sh
