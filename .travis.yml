@@ -22,4 +22,4 @@ before_install:
   - 'docker login --username "${CI_DOCKER_USERNAME}" --password="${CI_DOCKER_PASSWORD}" quay.io'
 
 script:
-  - "make push-container"
+  - "make container.build container.test container.push"

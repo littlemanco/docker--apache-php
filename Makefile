@@ -33,12 +33,31 @@ help: ## Show this menu
 	@echo -e $(ANSI_TITLE)Commands:$(ANSI_OFF)
 	@grep -E '^[a-zA-Z_-%]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[32m%-30s\033[0m %s\n", $$1, $$2}'
 
-container: ## The container to build, where ${VERSION} is the version to build.
+.PHONY: container
+container.build: ## The container to build, where ${VERSION} is the version to build.
 	docker build \
 	    --no-cache \
 	    --build-arg="PHP_VERSION="$${VERSION} \
 	    --tag="quay.io/littlemanco/apache-php:$${VERSION}-latest" \
 	    .
 
-push-container: container ## Builds and pushes the container
+.PHONY: container.test
+container.test: ## ${VERSION} | Ensure the container boots and runs successfully.
+	# Boot the container
+	docker run \
+	    --rm=true \
+	    --name="docker-apache-php--test" \
+	    --publish 80:80 \
+	    --publish 443:443 \
+	    --detach \
+	    quay.io/littlemanco/apache-php:$${VERSION}-latest
+	# Verify the container works
+	curl https://localhost \
+	    --head \
+	    --insecure
+	# Cleanup
+	docker stop "docker-apache-php--test"	
+
+.PHONY: container.push
+container.push:  ## Builds and pushes the container
 	docker push quay.io/littlemanco/apache-php:$${VERSION}-latest
