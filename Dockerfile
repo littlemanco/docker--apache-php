@@ -1,6 +1,6 @@
 FROM debian:stretch-slim
 
-ARG TINI_VERSION="v0.17.0"
+ARG TINI_VERSION="v0.18.0"
 ARG PHP_VERSION
 
 ##
