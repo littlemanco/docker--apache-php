@@ -51,6 +51,8 @@ container.test: ## ${VERSION} | Ensure the container boots and runs successfully
 	    --publish 443:443 \
 	    --detach \
 	    quay.io/littlemanco/apache-php:$${VERSION}-latest
+	# Wait for the container to boot
+	sleep 3
 	# Verify the container works
 	curl https://localhost \
 	    --head \
