@@ -7,6 +7,8 @@
 #  ENV TINI_VERSION "16.1" # Optional
 #
 
+set -e
+
 TINI_VERSION=${TINI_VERSION:-v0.17.0}
 
 # Exit codes from sysexists.h
@@ -26,6 +28,17 @@ __check_env() {
   if [[ -z "$PHP_VERSION" ]] || [[ -z "$TINI_VERSION" ]]; then
       __exit "Expected environment variables PHP_VERSION and TINI_VERSION. Not found" $__EXIT_CODE_USAGE
   fi
+}
+
+__provision_mta() {
+    apt-get update && \
+        apt-get install --yes
+
+    # Configure the simple MTA to forward to the `mail` host
+    RUN sed --in-place 's/mailhub=mail/mailhub=mail:25/' /etc/ssmtp/ssmtp.conf && \
+        echo "FromLineOverride=YES" >> /etc/ssmtp/ssmtp.conf
+
+    return $?
 }
 
 __provision() {
@@ -116,6 +129,8 @@ __provision() {
     # Build cleanup
     #
     apt-get purge --yes ${CONTAINER_BUILD_PACKAGES}
+
+    return $?
 }
 
 main() {

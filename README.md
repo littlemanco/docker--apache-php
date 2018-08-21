@@ -39,6 +39,20 @@ sufficiently granular for you to track your project against, I recommend you fin
 
 ## Usage
 
+### Mail
+
+Part of many PHP applications is the need to send mail. This project includes the mail transfer agent "ssmtp". This
+agent is an extremely simple sendmail compatible agent, designed to forward mail directly to an MTA that's running
+colocated with this container such as Postfix or Mailhog.
+
+It is configured to look for MTAs at the domain `mail`. This means that the DNS should return a match for the service
+`mail`, perhaps through the use of a record directly or through the use of search domains. This is accomplished by:
+
+- **docker-compose**: Calling the service "mail"
+- **kubernetes**: Creating a service called "mail"
+
+In both cases mail should arrive appropriately.
+
 ### TLS
 
 Please **DO NOT** use the self signed certificate that is packaged in the container for anything other than testing. It
