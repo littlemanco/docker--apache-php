@@ -51,7 +51,8 @@ It is configured to look for MTAs at the domain `mail`. This means that the DNS 
 - **docker-compose**: Calling the service "mail"
 - **kubernetes**: Creating a service called "mail"
 
-In both cases mail should arrive appropriately.
+In both cases mail should arrive appropriately. Additionally, it's possible to vary the configuration of ssmtp entirely
+by mounting in a configuration file at `/etc/ssmtp/ssmtp.conf`
 
 ### TLS
 
