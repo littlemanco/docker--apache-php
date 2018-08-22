@@ -137,6 +137,7 @@ __provision() {
 
 main() {
   __check_env;
+  __provision_mta;
   __provision;
 }
 
