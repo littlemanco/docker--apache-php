@@ -35,7 +35,7 @@ __provision_mta() {
         apt-get install ssmtp --yes
 
     # Configure the simple MTA to forward to the `mail` host
-    RUN sed --in-place 's/mailhub=mail/mailhub=mail:25/' /etc/ssmtp/ssmtp.conf && \
+    sed --in-place 's/mailhub=mail/mailhub=mail:25/' /etc/ssmtp/ssmtp.conf && \
         echo "FromLineOverride=YES" >> /etc/ssmtp/ssmtp.conf
 
     return $?
