@@ -32,7 +32,7 @@ __check_env() {
 
 __provision_mta() {
     apt-get update && \
-        apt-get install --yes
+        apt-get install ssmtp --yes
 
     # Configure the simple MTA to forward to the `mail` host
     RUN sed --in-place 's/mailhub=mail/mailhub=mail:25/' /etc/ssmtp/ssmtp.conf && \
