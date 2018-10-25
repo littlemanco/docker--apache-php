@@ -43,39 +43,62 @@ __provision_mta() {
 
 __provision() {
     export CONTAINER_BUILD_PACKAGES="wget gpg" && \
-    export BUILD_PACKAGES="lsb-release software-properties-common" && \
+    export BUILD_PACKAGES="lsb-release software-properties-common build-essential libmcrypt-dev" && \
     export RUN_PACKAGES="apt-transport-https ca-certificates curl" && \
     export LC_ALL=C.UTF-8 && \
-    export LANG=C.UTF-8 && \
+    export LANG=C.UTF-8
+
     #
     # Do base filesystem upgrades to update anything between when the original FS was released and build time
     #
     apt-get update && \
-    apt-get dist-upgrade --yes && \
+    apt-get dist-upgrade --yes
+
     #
     # Install required packages
     #
-    apt-get install --yes ${BUILD_PACKAGES} ${CONTAINER_BUILD_PACKAGES} ${RUN_PACKAGES} && \
+    apt-get install --yes ${BUILD_PACKAGES} ${CONTAINER_BUILD_PACKAGES} ${RUN_PACKAGES}
+
     #
     # Add the PHP Repo from Ondrej
     # Instructions for adding this repo come from https://packages.sury.org/php/README.txt
     #
     wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list && \
-    apt-get update && \
+    apt-get update
+
     #
     # Add tidyways to the sources list
     #
     echo "deb http://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages debian main" >> /etc/apt/sources.list.d/tidyways.list && \
-    curl https://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages/EEB5E8F4.gpg |  apt-key add - && \
+    curl https://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages/EEB5E8F4.gpg |  apt-key add -
+
     #
     # Install main packages
     #
     apt-get update && \
-    export RUN_PACKAGES="apache2 libapache2-mod-php${PHP_VERSION} php${PHP_VERSION}-curl php${PHP_VERSION}-opcache php${PHP_VERSION}-apcu php${PHP_VERSION}-gd php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-mcrypt php${PHP_VERSION}-pdo php${PHP_VERSION}-mysql php${PHP_VERSION}-simplexml php${PHP_VERSION}-soap php${PHP_VERSION}-xml php${PHP_VERSION}-xsl php${PHP_VERSION}-zip php${PHP_VERSION}-json php${PHP_VERSION}-iconv php${PHP_VERSION}-opcache php${PHP_VERSION}-dev tideways-php" && \
+    export RUN_PACKAGES="apache2 libapache2-mod-php${PHP_VERSION} php${PHP_VERSION}-curl php${PHP_VERSION}-opcache php${PHP_VERSION}-apcu php${PHP_VERSION}-gd php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-pdo php${PHP_VERSION}-mysql php${PHP_VERSION}-simplexml php${PHP_VERSION}-soap php${PHP_VERSION}-xml php${PHP_VERSION}-xsl php${PHP_VERSION}-zip php${PHP_VERSION}-json php${PHP_VERSION}-iconv php${PHP_VERSION}-opcache php${PHP_VERSION}-dev tideways-php" && \
     apt-get update && \
     apt-get install --yes \
-        ${RUN_PACKAGES} &&\
+        ${RUN_PACKAGES}
+
+    # Install mcrypt
+    #
+    # Must be installed via pecl in the case that it's PHP7.2+
+    case $PHP_VERSION in
+	    "5.6" | "7.0" | "7.1")
+		    apt-get install php${PHP_VERSION}-mcrypt
+		    ;;
+	    *)
+		    apt-get install php-pear mcrypt
+		    pecl install "mcrypt-1.0.1"
+
+		    echo extension=/usr/lib/php/20170718/mcrypt.so > /etc/php/${PHP_VERSION}/cli/conf.d/mcrypt.ini
+                    echo extension=/usr/lib/php/20170718/mcrypt.so > /etc/php/${PHP_VERSION}/apache2/conf.d/mcrypt.ini
+		    ;;
+    esac
+
+
     #
     # Install tini init
     #
@@ -86,7 +109,8 @@ __provision() {
         --auto-remove \
         --yes \
         ${BUILD_PACKAGES} && \
-    apt-get clean && \
+    apt-get clean
+
     #
     # Configure apache
     #
@@ -118,15 +142,18 @@ __provision() {
         sed --in-place 's/128M/512M/' "${FILE}/php.ini"; \
         # -- Mail
         sed --in-place 's/;sendmail_path =/sendmail_path=\/usr\/sbin\/ssmtp -t/' "${FILE}/php.ini"; \
-    done; \
+    done;
+
     # -- In Xenial, PHP7 is the default runtime. Change it to php${PHP_VERSION}
-    update-alternatives --install /usr/bin/php php /usr/bin/php${PHP_VERSION} 100 && \
+    update-alternatives --install /usr/bin/php php /usr/bin/php${PHP_VERSION} 100
+
     #
     # Logs
     #
     # -- Symlink the apache logs so they're piped to stdout
-    ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
-    ln -sf /proc/self/fd/1 /var/log/apache2/error.log && \
+    ln -sf /proc/self/fd/1 /var/log/apache2/access.log
+    ln -sf /proc/self/fd/1 /var/log/apache2/error.log
+
     #
     # Build cleanup
     #
