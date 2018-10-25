@@ -142,6 +142,8 @@ __provision() {
         sed --in-place 's/128M/512M/' "${FILE}/php.ini"; \
         # -- Mail
         sed --in-place 's/;sendmail_path =/sendmail_path=\/usr\/sbin\/ssmtp -t/' "${FILE}/php.ini"; \
+	# -- Timezone
+	sed --in-place 's/;date.timezone =/date.timezone=UTC/' "${FILE}/php.ini"; \
     done;
 
     # -- In Xenial, PHP7 is the default runtime. Change it to php${PHP_VERSION}
