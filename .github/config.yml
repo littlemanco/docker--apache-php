@@ -1,0 +1,11 @@
+---
+# See https://github.com/behaviorbot/welcome
+newIssueWelcomeComment: |
+  Hey welcome! We're super happy that you're getting started here.
+
+  As much as possible it's good to follow the templates that are supplied
+  when creating an issue. They're designed to make sure that we have all
+  the information that we need to further develop the project.
+
+  Feel free to ask for further clarification here, or check out the docs
+  for further details.
